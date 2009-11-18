@@ -3,3 +3,7 @@
 	email = kyle.fletcher@nrcan.gc.ca
 [push]
 	default = matching
+[diff]
+    external = git_diff_wrapper
+[pager]
+    diff =
