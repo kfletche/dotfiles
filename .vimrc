@@ -11,6 +11,11 @@ syntax on
 
 " Turn off folding
 set nofoldenable
+
+" Set colorscheme
+set background=dark
+colorscheme ir_black
+
 "
 " GLOBAL SETTINGS
 "
@@ -170,13 +175,12 @@ endif
 " Makes .tex files tex filetype
 let g:tex_flavor='latex'
 
-" Enable spelling
-if v:version >= 700
-  setlocal spell spelllang=en_ca
-  " Enable spell check for text files
-  autocmd BufNewFile,BufRead .vimprojects,.vimrc setlocal nospell
-endif
+"" Enable spelling
+"if v:version >= 700
+"  setlocal spell spelllang=en_ca
+"  " Enable spell check for text files
+"  autocmd BufNewFile,BufRead .vimprojects,.vimrc setlocal nospell
+"endif
 
-autocmd VimEnter * Project
+"autocmd VimEnter * Project
 autocmd VimEnter * wincmd w 
-
