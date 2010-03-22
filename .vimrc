@@ -184,3 +184,32 @@ let g:tex_flavor='latex'
 
 "autocmd VimEnter * Project
 autocmd VimEnter * wincmd w 
+
+""automatically compile tex files
+"au BufWritePost *.tex silent call Tex_CompileLatex()
+"au BufWritePost *.tex silent !pkill -USR1 xdvi.bin
+"
+"" Run latex, then dvipdf, then refresh the xpdf window.
+"let g:Tex_FormatDependency_pdf = 'dvi,pdf'
+"let g:Tex_CompileRule_pdf = 'dvipdf $*.dvi; xpdf -remote 127.0.0.1 -reload -raise'
+"let g:Tex_ViewRule_pdf = 'xpdf -remote 127.0.0.1'
+"let g:Tex_DefaultTargetFormat = 'pdf'
+"" Set the target format to pdf.
+"
+"" Set the warning messages to ignore.
+"let g:Tex_IgnoredWarnings =
+"\"Underfull\n".
+"\"Overfull\n".
+"\"specifier changed to\n".
+"\"You have requested\n".
+"\"Missing number, treated as zero.\n".
+"\"There were undefined references\n".
+"\"Citation %.%# undefined\n".
+"\'LaTeX Font Warning:'"
+"" This number N says that latex-suite should ignore the first N of the above.
+"let g:Tex_IgnoreLevel = 8
+"
+"" TIP: if you write your \label's as \label{fig:something}, then if you
+"" type in \ref{fig: and press Ctrl-N you will automatically cycle through
+"" all the figure labels. Very useful!
+"set iskeyword+=:
