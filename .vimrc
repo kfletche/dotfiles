@@ -10,11 +10,16 @@ filetype indent on
 syntax on
 
 " Turn off folding
+" set foldmethod=syntax
+" set foldnestmax=10
+" set foldlevel=1
 set nofoldenable
 
 " Set colorscheme
 set background=dark
 colorscheme ir_black
+
+hi Comment ctermfg=lightgray
 
 "
 " GLOBAL SETTINGS
@@ -48,7 +53,7 @@ set laststatus=2
 set matchtime=2
 
 " Don't highlight results of a search
-set nohlsearch
+set hlsearch
 
 " Enable CTRL-A/CTRL-X to work on octal and hex numbers, as well as characters
 set nrformats=octal,hex,alpha
@@ -78,7 +83,8 @@ set showmatch
 set t_RV=
 
 " Use 4 spaces for <Tab> and :retab
-set tabstop=4
+set tabstop=2
+set expandtab
 
 " Write swap file to disk after every 50 characters
 set updatecount=50
@@ -108,9 +114,6 @@ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")|execute("normal 
 set t_kb=
 fixdel
 
-" Avoid loading MatchParen plugin
-let loaded_matchparen = 1
-
 " netRW: Open files in a split window
 let g:netrw_browse_split = 1
 
@@ -118,58 +121,58 @@ let g:netrw_browse_split = 1
 " MAPPINGS
 "
 
-" save changes
-map ,s :w<CR>
-" exit vim without saving any changes
-map ,q :q!<CR>
-" exit vim saving changes
-map ,w :x<CR>
-" switch to upper/lower window quickly
-map <C-J> <C-W>j
-map <C-K> <C-W>k
-" use CTRL-F for omni completion
-imap <C-F> 
-" map CTRL-L to piece-wise copying of the line above the current one
-imap <C-L> @@@<ESC>hhkywjl?@@@<CR>P/@@@<CR>3s
-" map ,f to display all lines with keyword under cursor and ask which one to
-" jump to
-nmap ,f [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
-" use <F6> to toggle line numbers
-nmap <silent> <F6> :set number!<CR>
-" page down with <Space>
-nmap <Space> <PageDown>
-" open filename under cursor in a new window (use current file's working
-" directory) 
-nmap gf :new %:p:h/<cfile><CR>
-" map <Alt-p> and <Alt-P> to paste below/above and reformat
-nnoremap <Esc>P  P'[v']=
-nnoremap <Esc>p  p'[v']=
-" visual shifting (does not exit Visual mode)
-vnoremap < <gv
-vnoremap > >gv 
-
-" Generic highlight changes
-highlight Comment cterm=none ctermfg=Gray
-highlight IncSearch cterm=none ctermfg=Black ctermbg=DarkYellow
-highlight Search cterm=none ctermfg=Black ctermbg=DarkYellow
-highlight String cterm=none ctermfg=DarkGreen
-highlight treeDir cterm=none ctermfg=Cyan
-highlight treeUp cterm=none ctermfg=DarkYellow
-highlight treeCWD cterm=none ctermfg=DarkYellow
-highlight netrwDir cterm=none ctermfg=Cyan
-
+"  " save changes
+"  map ,s :w<CR>
+"  " exit vim without saving any changes
+"  map ,q :q!<CR>
+"  " exit vim saving changes
+"  map ,w :x<CR>
+"  " switch to upper/lower window quickly
+"  map <C-J> <C-W>j
+"  map <C-K> <C-W>k
+"  " use CTRL-F for omni completion
+"  imap <C-F> 
+"  " map CTRL-L to piece-wise copying of the line above the current one
+"  imap <C-L> @@@<ESC>hhkywjl?@@@<CR>P/@@@<CR>3s
+"  " map ,f to display all lines with keyword under cursor and ask which one to
+"  " jump to
+"  nmap ,f [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
+"  " use <F6> to toggle line numbers
+"  nmap <silent> <F6> :set number!<CR>
+"  " page down with <Space>
+"  nmap <Space> <PageDown>
+"  " open filename under cursor in a new window (use current file's working
+"  " directory)
+"  nmap gf :new %:p:h/<cfile><CR>
+"  " map <Alt-p> and <Alt-P> to paste below/above and reformat
+"  nnoremap <Esc>P  P'[v']=
+"  nnoremap <Esc>p  p'[v']=
+"  " visual shifting (does not exit Visual mode)
+"  vnoremap < <gv
+"  vnoremap > >gv
+"
+"  " Generic highlight changes
+"  highlight Comment cterm=none ctermfg=Gray
+"  highlight IncSearch cterm=none ctermfg=Black ctermbg=DarkYellow
+"  highlight Search cterm=none ctermfg=Black ctermbg=DarkYellow
+"  highlight String cterm=none ctermfg=DarkGreen
+"  highlight treeDir cterm=none ctermfg=Cyan
+"  highlight treeUp cterm=none ctermfg=DarkYellow
+"  highlight treeCWD cterm=none ctermfg=DarkYellow
+"  highlight netrwDir cterm=none ctermfg=Cyan
+"
 " Set up cscope options
-if has("cscope")
-	set csprg=/usr/bin/cscope
-	set csto=0
-	set cst
-	set nocsverb
-	cs add cscope.out
-	set csverb
-	map <C-_> :cstag <C-R>=expand("<cword>")<CR><CR>
-	map g<C-]> :cs find 3 <C-R>=expand("<cword>")<CR><CR>
-	map g<C-\> :cs find 0 <C-R>=expand("<cword>")<CR><CR>
-endif
+" if has("cscope")
+" 	set csprg=/usr/bin/cscope
+" 	set csto=0
+" 	set cst
+" 	set nocsverb
+" 	cs add cscope.out
+" 	set csverb
+" 	map <C-_> :cstag <C-R>=expand("<cword>")<CR><CR>
+" 	map g<C-]> :cs find 3 <C-R>=expand("<cword>")<CR><CR>
+" 	map g<C-\> :cs find 0 <C-R>=expand("<cword>")<CR><CR>
+" endif
 
 
 " Makes .tex files tex filetype
