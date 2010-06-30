@@ -112,4 +112,6 @@ set -o vi
 # enable 256 color terminal
 if [[ "${COLORTERM}" == "gnome-terminal" ]]; then
   export TERM="gnome-256color"
+else
+  export TERM="xterm-256color"
 fi
