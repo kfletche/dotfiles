@@ -116,3 +116,6 @@ if [[ "${COLORTERM}" == "gnome-terminal" ]]; then
 else
   export TERM="xterm-256color"
 fi
+
+# gem path
+export PATH=/var/lib/gems/1.8/bin:$PATH
