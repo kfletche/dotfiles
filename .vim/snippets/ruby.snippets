@@ -245,6 +245,7 @@ snippet eai
 	each_index { |${1:i}| ${2} }
 snippet eaid
 	each_index do |${1:i}|
+		${2}
 	end
 snippet eak
 	each_key { |${1:key}| ${2} }
@@ -374,7 +375,11 @@ snippet seld
 	end
 snippet lam
 	lambda { |${1:args}| ${2} }
-snippet do
+snippet doo
+	do
+		${1}
+	end
+snippet dov
 	do |${1:variable}|
 		${2}
 	end
@@ -502,3 +507,56 @@ snippet tas
 	task :${2:task_name => [:dependent, :tasks]} do
 		${3}
 	end
+# block
+snippet b
+	{|${1:var}| ${2}}
+snippet begin
+	begin
+		raise 'A test exception.'
+	rescue Exception => e
+		puts e.message
+		puts e.backtrace.inspect
+	else
+		# other exception
+	ensure
+		# always excute
+	end
+
+#migrations
+snippet mac
+	add_column :${1:table_name}, :${2:column_name}, :${3:data_type}
+snippet mrc
+	remove_column :${1:table_name}, :${2:column_name}
+snippet mrenc
+	rename_column :${1:table_name}, :${2:old_column_name}, :${3:new_column_name}
+#rspec
+snippet it
+	it "${1:spec_name}" do
+		${2}
+	end
+snippet desc
+	describe ${1:class_name} do
+		${2}
+	end
+snippet cont
+	context "${1:message}" do
+		${2}
+	end
+snippet bef
+	before(:${1:each}) do
+		${2}
+	end
+snippet aft
+	after(:${1:each}) do
+		${2}
+	end
+
+#debugging
+snippet debug
+	require 'ruby-debug'; debugger;
+#views
+snippet cfor
+	<% content_for :${1:head} do %>
+		${2}
+	<% end %>
+>>>>>>> d46588cad4f48f1fe6f0e80c06b87f9b78792422
