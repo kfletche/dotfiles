@@ -1,0 +1,7 @@
+" Set colorscheme
+set background=dark
+colorscheme ir_black
+
+" open windows on right
+"set splitright
+"set splitbelow
