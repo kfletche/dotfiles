@@ -1,3 +1,3 @@
-$pdflatex = 'pdflatex -interaction=nonstopmode';
+$pdflatex = 'xelatex %O %S';
 $pdf_previewer = "start evince";
 $pdf_update_method = 0;
