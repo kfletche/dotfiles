@@ -1,0 +1,4 @@
+home /media/home
+log /var/webapps/log/articles
+nrcan /media/nrcan
+webapps /var/webapps
