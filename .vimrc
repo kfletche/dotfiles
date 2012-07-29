@@ -1,1 +1,0 @@
-/home/flipper/.vim/janus/vim/vimrc
