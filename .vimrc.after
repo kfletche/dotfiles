@@ -3,5 +3,51 @@ set background=dark
 colorscheme ir_black
 
 " open windows on right
-"set splitright
-"set splitbelow
+set splitright
+set splitbelow
+
+" markdown folding
+set nocompatible
+if has("autocmd")
+    filetype plugin indent on
+endif
+nnoremap <Space> za
+let g:markdown_fold_style = 'nested'
+
+func! WordProcessorMode()
+  setlocal formatoptions=1
+  setlocal noexpandtab
+  map j gj
+  map k gk
+  setlocal spell spelllang=en_us
+  set thesaurus+=/Users/sbrown/.vim/thesaurus/mthesaur.txt
+  set complete+=s
+  set formatprg=par
+  setlocal wrap
+  setlocal linebreak
+endfu
+com! WP call WordProcessorMode()
+
+" automatically set paste mode for pasting
+" taken from https://coderwall.com/p/if9mda/automatically-set-paste-mode-in-vim-when-pasting-in-insert-mode
+function! WrapForTmux(s)
+  if !exists('$TMUX')
+    return a:s
+  endif
+
+  let tmux_start = "\<Esc>Ptmux;"
+  let tmux_end = "\<Esc>\\"
+
+  return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
+endfunction
+
+let &t_SI .= WrapForTmux("\<Esc>[?2004h")
+let &t_EI .= WrapForTmux("\<Esc>[?2004l")
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
+
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()

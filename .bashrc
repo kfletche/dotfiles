@@ -112,8 +112,6 @@ fi
 
 export PATH=/var/lib/gems/1.8/bin:$PATH:/usr/local/android-sdk-linux/platform-tools:/usr/local/android-sdk-linux/tools
 
-alias sudo='rvmsudo'
-
 # Define Vim wrappers which unsets GEM_HOME and GEM_PATH before
 # invoking vim and all known aliases
 #
