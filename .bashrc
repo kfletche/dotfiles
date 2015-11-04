@@ -110,7 +110,7 @@ else
   export TERM="xterm-256color"
 fi
 
-export PATH=/var/lib/gems/1.8/bin:$PATH:/usr/local/android-sdk-linux/platform-tools:/usr/local/android-sdk-linux/tools
+export PATH=$PATH:/usr/local/android-sdk-linux/platform-tools:/usr/local/android-sdk-linux/tools:/usr/local/heroku/bin
 
 # Define Vim wrappers which unsets GEM_HOME and GEM_PATH before
 # invoking vim and all known aliases
