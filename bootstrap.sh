@@ -37,3 +37,7 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim \
   || die "Could not install vundle."
 
 vim +PluginInstall +qall || die "Vundle plugin install failed."
+
+~/.vim/bundle/YouCompleteMe/install.py --clang-completer \
+  || die "Couldn't finish installing YouCompleteMe plugin.."
+
