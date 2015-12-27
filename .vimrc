@@ -20,6 +20,8 @@ Plugin 'plasticboy/vim-markdown' " markdown formatting
 Plugin 'jamessan/vim-gnupg' " pgp support
 Plugin 'altercation/vim-colors-solarized' " colorscheme
 Plugin 'twerth/ir_black' " colorscheme
+Plugin 'tpope/vim-rails' " rails tools
+Plugin 'reedes/vim-pencil' " writing mode
 
 call vundle#end()
 filetype plugin indent on
@@ -32,8 +34,9 @@ set nocompatible
 
 " colors 
 if has('gui_running')
-  set background=light
-  colorscheme solarized
+"  set background=light
+"  colorscheme solarized
+  set guifont=Inconsolata\ for\ Powerline:h16
 else
   set background=dark
   colorscheme ir_black
@@ -70,10 +73,8 @@ function! WrapForTmux(s)
   if !exists('$TMUX')
     return a:s
   endif
-
   let tmux_start = "\<Esc>Ptmux;"
   let tmux_end = "\<Esc>\\"
-
   return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
 endfunction
 
@@ -88,20 +89,19 @@ endfunction
 
 inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+
 " spacing tabs for python (PEP8) et al.
 au BufNewFile,BufRead *.py
-    \ set tabstop=4
-    \ set softtabstop=4
-    \ set shiftwidth=4
-    \ set textwidth=79
-    \ set expandtab
-    \ set autoindent
-    \ set fileformat=unix
-
-au BufNewFile,BufRead *.js, *.html, *.css
-    \ set tabstop=2
-    \ set softtabstop=2
-    \ set shiftwidth=2
+    \ set tabstop=4 | 
+    \ set softtabstop=4 | 
+    \ set shiftwidth=4 | 
+    \ set textwidth=79 | 
+    \ set expandtab | 
+    \ set autoindent | 
+    \ set fileformat=unix |
 
 "ignore files in NERDTree
 let NERDTreeIgnore=['\.pyc$', '\~$'] 
@@ -109,3 +109,6 @@ let NERDTreeIgnore=['\.pyc$', '\~$']
 " youcompleteme customizations
 let g:ycm_autoclose_preview_window_after_completion=1 " window goes away
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR> " map goto key
+
+" start NERDtree on enter
+au VimEnter *  NERDTree
