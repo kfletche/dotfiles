@@ -109,6 +109,3 @@ let NERDTreeIgnore=['\.pyc$', '\~$']
 " youcompleteme customizations
 let g:ycm_autoclose_preview_window_after_completion=1 " window goes away
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR> " map goto key
-
-" start NERDtree on enter
-au VimEnter *  NERDTree
