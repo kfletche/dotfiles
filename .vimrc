@@ -166,7 +166,7 @@ map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR> " map goto key
 " ======= Utility Customizations ======= "
 
 " Prompt for a command to run
-map <Leader"vp :VimuxPromptCommand<CR>
+map <Leader>vp :VimuxPromptCommand<CR>
 
 
 " ======= Plugin Optins ======= "
@@ -185,3 +185,18 @@ let g:vim_markdown_folding_disabled=1
 
 " SimpylFold
 let g:SimpylFold_docstring_preview=1
+
+" Zoom / Restore window.
+function! s:ZoomToggle() abort
+    if exists('t:zoomed') && t:zoomed
+        execute t:zoom_winrestcmd
+        let t:zoomed = 0
+    else
+        let t:zoom_winrestcmd = winrestcmd()
+        resize
+        vertical resize
+        let t:zoomed = 1
+    endif
+endfunction
+command! ZoomToggle call s:ZoomToggle()
+nnoremap <C-w>z :ZoomToggle<CR>
