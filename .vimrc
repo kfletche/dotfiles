@@ -76,7 +76,7 @@ set splitright
 set splitbelow
 
 set scrolloff=3 " when to start scrolling
-set showmode " show VISUAL at bottom
+set noshowmode " hide VISUAL at bottom
 set nopaste " turn off autoindent when pasting
 set wildmenu " show potential completions
 set wildignore+=*.o,*.obj,.git,*.pyc,.DS_Store
@@ -86,7 +86,7 @@ set ttyfast " assume fast terminal, improves redraw
 set backspace=indent,eol,start " make backspace work over eol etc.
 set laststatus=2 " always show statusline
 set t_Co=256 " force 256 colors
-set showbreak=↪
+"set showbreak=↪
 
 " Spaces/Tab
 set autoindent
