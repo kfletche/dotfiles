@@ -14,7 +14,7 @@ Plugin 'Valloric/YouCompleteMe' " autocompletion
 Plugin 'scrooloose/syntastic' " syntax checking
 Plugin 'nvie/vim-flake8' " PEP8 checking
 Plugin 'scrooloose/nerdtree'
-Plugin 'jistr/vim-nerdtree-tabs'
+"Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'kien/ctrlp.vim' " search
 Plugin 'tpope/vim-fugitive' " git support
 Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
@@ -28,6 +28,8 @@ Plugin 'Lokaltog/vim-distinguished' " colorscheme
 Plugin 'reedes/vim-pencil' " writing mode
 Plugin 'benmills/vimux' " tmux/vim integration
 Plugin 'tmhedberg/SimpylFold' " proper folding for python
+Plugin 'xolox/vim-misc' " delete with colorscheme-switcher
+Plugin 'xolox/vim-colorscheme-switcher' " cycle though vim themes with F8
 
 call vundle#end()
 
@@ -39,6 +41,8 @@ autocmd BufRead,InsertLeave * match ExtraWhitespace /\s\+$/
 highlight ExtraWhitespace ctermbg=red guibg=red
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 
+" Switch colorschemes quickly
+call togglebg#map("<F5>")
 
 " ======= Navication Shortcuts======= "
 
@@ -61,7 +65,11 @@ set nocompatible
 if has('gui_running')
   set background=light
   colorscheme solarized
-  set guifont=Inconsolata\ for\ Powerline:h16
+  if has('gui_macvim')
+    set guifont=Inconsolata\ for\ Powerline:h16
+  else
+    set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
+  endif
 else
   set background=dark
   colorscheme ir_black
@@ -76,7 +84,7 @@ set splitright
 set splitbelow
 
 set scrolloff=3 " when to start scrolling
-set noshowmode " hide VISUAL at bottom
+set showmode " show VISUAL at bottom
 set nopaste " turn off autoindent when pasting
 set wildmenu " show potential completions
 set wildignore+=*.o,*.obj,.git,*.pyc,.DS_Store
@@ -102,6 +110,8 @@ set smartindent " indent based on the previous line
 set nobackup
 set nowritebackup
 set noswapfile
+
+set nofoldenable
 
 " ======= Writing Options ======= "
 
@@ -170,6 +180,9 @@ map <Leader>vp :VimuxPromptCommand<CR>
 
 
 " ======= Plugin Optins ======= "
+
+" YouCompleteMe
+let g:ycm_python_binary_path = '/usr/bin/python3'
 
 " Vimux
 let VimuxUseNearestPane = 1
