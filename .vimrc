@@ -1,37 +1,82 @@
+" hide imp deprecation warning for ycm <-- remove at some time.
+if has('python3')
+  silent! python3 1
+endif
+
 " ======= Initial Setup ======= "
 
 filetype off
 filetype plugin indent on
 
-" Vundle plugins
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+" Vim-plug plugins
+call plug#begin('~/.vim/plugged')
 
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'vim-scripts/indentpython.vim' " fixes indentation
-Plugin 'vim-scripts/DirDiff.vim' " recursive directory diffs
-Plugin 'Valloric/YouCompleteMe' " autocompletion
-Plugin 'scrooloose/syntastic' " syntax checking
-Plugin 'nvie/vim-flake8' " PEP8 checking
-Plugin 'scrooloose/nerdtree'
-"Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'kien/ctrlp.vim' " search
-Plugin 'tpope/vim-fugitive' " git support
-Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
-Plugin 'godlygeek/tabular' " for markdown formatting
-Plugin 'plasticboy/vim-markdown' " markdown formatting
-Plugin 'jamessan/vim-gnupg' " pgp support
-Plugin 'altercation/vim-colors-solarized' " colorscheme
-Plugin 'twerth/ir_black' " colorscheme
-Plugin 'tpope/vim-rails' " rails tools
-Plugin 'Lokaltog/vim-distinguished' " colorscheme
-Plugin 'reedes/vim-pencil' " writing mode
-Plugin 'benmills/vimux' " tmux/vim integration
-Plugin 'tmhedberg/SimpylFold' " proper folding for python
-Plugin 'xolox/vim-misc' " delete with colorscheme-switcher
-Plugin 'xolox/vim-colorscheme-switcher' " cycle though vim themes with F8
+" Snippits & Tabs
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'ervandew/supertab'
 
-call vundle#end()
+" Code Completion
+Plug 'ternjs/tern_for_vim', { 'do': 'yarn install' }
+Plug 'Valloric/YouCompleteMe', { 'do': 'python3 ./install.py --js-completer' } " autocompletion
+
+Plug 'w0rp/ale' " linting
+"Plug 'Shougo/deoplete.nvim'
+"Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+"Plug 'roxma/nvim-yarp'
+"Plug 'roxma/vim-hug-neovim-rpc'
+"Plug 'steelsojka/deoplete-flow'
+
+" Javascript/React plugins
+Plug 'mxw/vim-jsx'
+Plug 'prettier/prettier'
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+
+" Python
+Plug 'vim-scripts/indentpython.vim' " fixes indentation
+Plug 'nvie/vim-flake8' " PEP8 checking
+
+" Search / Navigation
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } "search
+" Plug 'ctrlpvim/ctrlp.vim' " search
+" Plug 'scrooloose/nerdtree'
+" Plug 'jistr/vim-nerdtree-tabs'
+
+" Diff/Git
+Plug 'vim-scripts/DirDiff.vim' " recursive directory diffs
+Plug 'tpope/vim-fugitive' " git support
+
+" Statusline
+Plug 'itchyny/lightline.vim'
+"Plug 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+"Plug 'vim-airline/vim-airline'
+"Plug 'vim-airline/vim-airline-themes'
+
+" Markdown
+Plug 'godlygeek/tabular' " for markdown formatting
+Plug 'plasticboy/vim-markdown' " markdown formatting
+Plug 'jamessan/vim-gnupg' " pgp support
+
+" Colors
+Plug 'twerth/ir_black' " colorscheme
+"Plug 'altercation/vim-colors-solarized' " colorscheme
+"Plug 'Lokaltog/vim-distinguished' " colorscheme
+""Plug 'xolox/vim-misc' " delete with colorscheme-switcher
+"Plug 'xolox/vim-colorscheme-switcher' " cycle though vim themes with F8
+
+" Ruby/Rails
+"Plug 'tpope/vim-rails' " rails tools
+
+" Misc
+Plug 'reedes/vim-pencil' " writing mode
+Plug 'benmills/vimux' " tmux/vim integration
+Plug 'tmhedberg/SimpylFold' " proper folding for python
+Plug 'tpope/vim-obsession' " save vim to disk
+
+call plug#end()
+
+"let g:deoplete#enable_at_startup = 1
+"let g:deoplete#num_processes = 1
 
 " Highlight trailing whitespace
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
@@ -41,8 +86,8 @@ autocmd BufRead,InsertLeave * match ExtraWhitespace /\s\+$/
 highlight ExtraWhitespace ctermbg=red guibg=red
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 
-" Switch colorschemes quickly
-call togglebg#map("<F5>")
+"" Switch colorschemes quickly
+"call togglebg#map("<F5>")
 
 " ======= Navication Shortcuts======= "
 
@@ -111,7 +156,8 @@ set nobackup
 set nowritebackup
 set noswapfile
 
-set nofoldenable
+set foldenable
+set foldlevel=1
 
 " ======= Writing Options ======= "
 
@@ -166,23 +212,30 @@ au BufNewFile,BufRead *.py
     \ set fileformat=unix |
 
 " ignore files in NERDTree
-let NERDTreeIgnore=['\.pyc$', '\~$']
-
-" youcompleteme customizations
-let g:ycm_autoclose_preview_window_after_completion=1 " window goes away
-map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR> " map goto key
-
+"let NERDTreeIgnore=['\.pyc$', '\~$']
 
 " ======= Utility Customizations ======= "
 
 " Prompt for a command to run
 map <Leader>vp :VimuxPromptCommand<CR>
 
+" Supertab and UtilSnips
+autocmd FileType javascript let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+let g:UltiSnipsExpandTrigger="<C-j>"
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
-" ======= Plugin Optins ======= "
+" ======= Plugin Options ======= "
+
+" Ale
+let g:ale_fixers = {
+\   'javascript': ['eslint']
+\ }
+nmap <leader>d <Plug>(ale_fix)
 
 " YouCompleteMe
-let g:ycm_python_binary_path = '/usr/bin/python3'
+let g:ycm_python_binary_path = '/usr/local/bin/python3'
+let g:ycm_autoclose_preview_window_after_completion=1 " window goes away
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR> " map goto key
 
 " Vimux
 let VimuxUseNearestPane = 1
@@ -194,7 +247,7 @@ let g:netrw_banner = 0
 let g:netrw_bufsettings = 'noma nomod nu nowrap ro nobl'
 
 " vim-markdown
-let g:vim_markdown_folding_disabled=1
+"let g:vim_markdown_folding_disabled=1
 
 " SimpylFold
 let g:SimpylFold_docstring_preview=1

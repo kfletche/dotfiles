@@ -33,11 +33,8 @@ done
 
 rmdir $TMP || die "Could not remove $TMP"
 
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim \
-  || die "Could not install vundle."
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim \
+    || die "Could not install vim-plug"
 
-vim +PluginInstall +qall || die "Vundle plugin install failed."
-
-~/.vim/bundle/YouCompleteMe/install.py --clang-completer \
-  || die "Couldn't finish installing YouCompleteMe plugin.."
-
+vim +PlugInstall +qall || die "Plugins could not be installed."
