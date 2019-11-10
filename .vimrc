@@ -228,7 +228,8 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " Ale
 let g:ale_fixers = {
-\   'javascript': ['eslint']
+\   'javascript': ['eslint'],
+\   'html': ['prettier']
 \ }
 nmap <leader>d <Plug>(ale_fix)
 

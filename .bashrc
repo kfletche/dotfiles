@@ -1,10 +1,11 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
 # don't put duplicate lines in the history. See bash(1) for more options
 HISTCONTROL=ignoreboth
+
+# large history size
+HISTSIZE=10000
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -12,9 +13,6 @@ shopt -s histappend
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
-
-# make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
@@ -79,11 +77,6 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-# some more ls aliases
-alias ll='ls -l'
-alias la='ls -A'
-alias l='ls -CF'
-
 # docker aliases
 alias drmi='docker rmi $(docker images --filter "dangling=true" -q --no-trunc)'
 
@@ -126,3 +119,5 @@ function define_vim_wrappers()
 }
 
 define_vim_wrappers
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
