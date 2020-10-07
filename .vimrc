@@ -33,9 +33,9 @@ Plug 'vim-scripts/DirDiff.vim'        " recursive directory diffs
 Plug 'tpope/vim-fugitive'             " git support
 
 " Statusline
-"Plug 'itchyny/lightline.vim'
+Plug 'itchyny/lightline.vim'
 "Plug 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
-Plug 'vim-airline/vim-airline'
+"Plug 'vim-airline/vim-airline'
 "Plug 'vim-airline/vim-airline-themes'
 
 " Markdown
@@ -47,6 +47,8 @@ Plug 'jamessan/vim-gnupg'             " pgp support
 Plug 'twerth/ir_black'                " colorscheme
 Plug 'morhetz/gruvbox'
 Plug 'tomasiser/vim-code-dark'
+Plug 'jeffkreeftmeijer/vim-dim'
+
 "Plug 'altercation/vim-colors-solarized' " colorscheme
 "Plug 'Lokaltog/vim-distinguished'" colorscheme
 ""Plug 'xolox/vim-misc' " delete with colorscheme-switcher
@@ -87,6 +89,7 @@ set encoding=utf-8
 
 set hidden " for coc
 set number " turn on line numbering
+set relativenumber
 set nocompatible
 
 " for coc
@@ -108,8 +111,9 @@ else
   set background=dark
   "colorscheme ir_black
   "colorscheme gruvbox
-  colorscheme codedark
-  let g:airline_theme='codedark'
+  "colorscheme codedark
+  colorscheme dim
+  "let g:airline_theme='codedark'
 endif
 
 " clipboard in os x
@@ -214,7 +218,7 @@ let g:UltiSnipsExpandTrigger="<C-j>"
 
 " CoC
 "
-"nmap <leader>d  <Plug>(coc-codeaction)
+nmap <leader>d  <Plug>(coc-codeaction)
 "nmap <leader>d :CocCommand eslint.executeAutofix<cr>
 nmap gn <Plug>(coc-diagnostic-next)
 nmap gp <Plug>(coc-diagnostic-prev)
