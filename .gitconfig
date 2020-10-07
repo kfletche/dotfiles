@@ -20,3 +20,7 @@
 	editor = vim
 [apply]
 	whitespace = fix
+[format]
+	pretty = format:%C(auto)%h%d (%cd) %s
+[log]
+	date = format:%a, %d %b %Y %-I:%M%p
