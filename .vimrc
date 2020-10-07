@@ -6,10 +6,11 @@ filetype plugin indent on
 " Vim-plug plugins
 call plug#begin('~/.vim/plugged')
 
-" Code Completion
+" Code Completion & references
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-"Plug 'ternjs/tern_for_vim', { 'do': 'yarn install' }
-"Plug 'w0rp/ale'                       " linting
+
+" Linting
+"Plug 'dense-analysis/ale'             " faster linting than coc
 
 " Snippits & Tabs
 Plug 'SirVer/ultisnips'               " snippets manager
@@ -17,8 +18,8 @@ Plug 'honza/vim-snippets'             " snippets library
 "Plug 'ervandew/supertab'
 
 " Python
-Plug 'vim-scripts/indentpython.vim'   " fixes indentation
-Plug 'nvie/vim-flake8'                " PEP8 checking
+"Plug 'vim-scripts/indentpython.vim'   " fixes indentation
+"Plug 'nvie/vim-flake8'                " PEP8 checking
 Plug 'tmhedberg/SimpylFold'           " proper folding for python
 
 " Search / Navigation
@@ -32,9 +33,9 @@ Plug 'vim-scripts/DirDiff.vim'        " recursive directory diffs
 Plug 'tpope/vim-fugitive'             " git support
 
 " Statusline
-Plug 'itchyny/lightline.vim'
+"Plug 'itchyny/lightline.vim'
 "Plug 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
-"Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline'
 "Plug 'vim-airline/vim-airline-themes'
 
 " Markdown
@@ -44,6 +45,8 @@ Plug 'jamessan/vim-gnupg'             " pgp support
 
 " Colors
 Plug 'twerth/ir_black'                " colorscheme
+Plug 'morhetz/gruvbox'
+Plug 'tomasiser/vim-code-dark'
 "Plug 'altercation/vim-colors-solarized' " colorscheme
 "Plug 'Lokaltog/vim-distinguished'" colorscheme
 ""Plug 'xolox/vim-misc' " delete with colorscheme-switcher
@@ -103,8 +106,10 @@ if has('gui_running')
   endif
 else
   set background=dark
-  colorscheme ir_black
-  "colorscheme distinguished
+  "colorscheme ir_black
+  "colorscheme gruvbox
+  colorscheme codedark
+  let g:airline_theme='codedark'
 endif
 
 " clipboard in os x
@@ -209,9 +214,10 @@ let g:UltiSnipsExpandTrigger="<C-j>"
 
 " CoC
 "
-nmap <leader>d <Plug>(coc-format-selected)
-nmap ]g <Plug>(coc-diagnostic-next)
-nmap [g <Plug>(coc-diagnostic-prev)
+"nmap <leader>d  <Plug>(coc-codeaction)
+"nmap <leader>d :CocCommand eslint.executeAutofix<cr>
+nmap gn <Plug>(coc-diagnostic-next)
+nmap gp <Plug>(coc-diagnostic-prev)
 
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
@@ -253,14 +259,10 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
 
-" Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-
-
 augroup mygroup
   autocmd!
   " Setup formatexpr specified filetype(s).
+  autocmd FileType javascript setl formatexpr=CocCommand('eslint.executeAutofix')
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
   " Update signature help on jump placeholder.
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
@@ -325,30 +327,32 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 
-
 let g:coc_global_extensions = [
   \ 'coc-snippets',
   \ 'coc-pairs',
   \ 'coc-tsserver',
   \ 'coc-eslint',
+  \ 'coc-python',
   \ 'coc-json',
   \ 'coc-css',
   \ 'coc-html',
   \ ]
 
 let g:coc_user_config = {
-  \ "prettier.eslintIntegration": v:true,
   \ "codeLens.enable": v:true,
-  \ 'suggest': {
-  \   'enablePreview': v:true,
-  \   'floatEnable': v:true,
-  \   'maxCompleteItemCount': 48,
-  \   'minTriggerInputLength': 2,
-  \   'noselect': v:false,
-  \   'preferCompleteThanJumpPlaceholder': v:true,
-  \   'timeout': 500,
-  \   'triggerAfterInsertEnter': v:true,
+  \ "eslint.filetypes": [
+  \     "javascript",
+  \     "typescript",
+  \     "typescriptreact",
+  \     "javascriptreact"
+  \ ],
+  \ "eslint.options" : {
+  \     "env": {
+  \         "browser": v:true,
+  \         "node": v:true
+  \     }
   \ },
+  \ "eslint.autoFixOnSave": v:true,
   \ 'diagnostic': {
   \   'errorSign': '✘',
   \   'warningSign': '⚠',
@@ -363,12 +367,6 @@ let g:coc_user_config = {
   \   'typescript': ['tslint']
   \  },
   \ 'coc.preferences.formatOnSaveFiletypes': [
-  \   'javascript',
-  \   'javascriptreact',
-  \   'typescript',
-  \   'typescriptreact',
-  \   'typescript.tsx',
-  \   'html',
   \   'json',
   \   'graphql',
   \ ],
@@ -376,32 +374,17 @@ let g:coc_user_config = {
   \ 'css.lint':  {
   \   'duplicateProperties': 'warning',
   \   'float': 'warning',
-  \ },
-\ }
+  \ }
+  \ }
 
-
-
-
-"" Ale
+" Ale
 "let g:ale_fixers = {
 "\   'javascript': ['eslint'],
-"\   'html': ['prettier']
+"\   'python': ['pylint'],
+"\   'html': ['prettier'],
+"\   'css': ['prettier']
 "\ }
 "nmap <leader>d <Plug>(ale_fix)
-
-"" YouCompleteMe
-"let g:ycm_python_binary_path = '/usr/local/bin/python3'
-"let g:ycm_autoclose_preview_window_after_completion=1 " window goes away
-"map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR> " map goto key
-
-" Vimux
-let VimuxUseNearestPane = 1
-let g:VimuxOrientation = "h"
-let g:VimuxHeight = "40"
-
-" Netrw
-let g:netrw_banner = 0
-let g:netrw_bufsettings = 'noma nomod nu nowrap ro nobl'
 
 " vim-markdown
 "let g:vim_markdown_folding_disabled=1
