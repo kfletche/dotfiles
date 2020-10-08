@@ -61,6 +61,8 @@ Plug 'christoomey/vim-tmux-navigator'
 "Plug 'benmills/vimux'                 " tmux/vim integration
 Plug 'tpope/vim-obsession'            " save vim to disk
 Plug 'tpope/vim-commentary'           " better commenting
+Plug 'suy/vim-context-commentstring'  " even nicer jsx commentary
+Plug 'maxmellon/vim-jsx-pretty'       " even nicer jsx commentary
 
 call plug#end()
 
