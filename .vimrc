@@ -20,7 +20,7 @@ Plug 'honza/vim-snippets'             " snippets library
 " Python
 "Plug 'vim-scripts/indentpython.vim'   " fixes indentation
 "Plug 'nvie/vim-flake8'                " PEP8 checking
-Plug 'tmhedberg/SimpylFold'           " proper folding for python
+Plug 'tmhedberg/SimpylFold'            " proper folding for python
 
 " Search / Navigation
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } "search
@@ -48,6 +48,7 @@ Plug 'twerth/ir_black'                " colorscheme
 Plug 'morhetz/gruvbox'
 Plug 'tomasiser/vim-code-dark'
 Plug 'jeffkreeftmeijer/vim-dim'
+Plug 'ayu-theme/ayu-vim'
 
 "Plug 'altercation/vim-colors-solarized' " colorscheme
 "Plug 'Lokaltog/vim-distinguished'" colorscheme
@@ -109,10 +110,14 @@ if has('gui_running')
   endif
 else
   set background=dark
-  "colorscheme ir_black
+  colorscheme ir_black
   "colorscheme gruvbox
   "colorscheme codedark
-  colorscheme dim
+  " set termguicolors     " enable true colors support
+  " let ayucolor="light"  " for light version of theme
+  " let ayucolor="mirage" " for mirage version of theme
+  " let ayucolor="dark"   " for dark version of theme
+  " colorscheme ayu
   "let g:airline_theme='codedark'
 endif
 
