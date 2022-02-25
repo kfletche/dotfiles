@@ -112,7 +112,9 @@ if has('gui_running')
   endif
 else
   set background=dark
-  colorscheme ir_black
+  if filereadable( expand("$HOME/.vim/colors/ir_black.vim") )
+        colorscheme ir_black
+  endif
   "colorscheme gruvbox
   "colorscheme codedark
   " set termguicolors     " enable true colors support

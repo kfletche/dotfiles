@@ -5,6 +5,8 @@
 - clean: ['~']
 
 - link:
+    ~/.bashrc: bashrc
+    ~/.bash_profile: bash_profile
     ~/.tmux.conf: tmux.conf
     ~/.vimrc: vimrc
     ~/.latexmkrc: latexmkrc
@@ -16,3 +18,5 @@
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
+  - [curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim, Install vim plug]
+  - [vim +'PlugInstall --sync' +qa, Install vim plugins]
