@@ -15,7 +15,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Formatting can get these from coc
 "Plug 'nvie/vim-flake8'                " PEP8 checking
-"Plug 'psf/black'                      " Black code formatting
+Plug 'psf/black'                      " Black code formatting
 
 " Snippits & Tabs
 Plug 'SirVer/ultisnips'               " snippets manager
@@ -135,10 +135,6 @@ nmap Q <Nop>
 
 " save read-only files
 command -nargs=0 Sudow w !sudo tee % >/dev/null
-
-" abreviations
-ab ip import ipdb; ipdb.set_trace()
-
 
 "--------------------
 " Movement and resize
@@ -392,14 +388,14 @@ set shortmess+=c
 set signcolumn=number
 
 let g:coc_global_extensions = [
-  \ 'coc-snippets',
-  \ 'coc-pairs',
-  \ 'coc-tsserver',
-  \ 'coc-eslint',
-  \ 'coc-python',
-  \ 'coc-json',
-  \ 'coc-css',
-  \ 'coc-html',
+  \ "coc-snippets",
+  \ "coc-pairs",
+  \ "coc-tsserver",
+  \ "coc-eslint",
+  \ "coc-pyright",
+  \ "coc-json",
+  \ "coc-css",
+  \ "coc-html",
   \ ]
 
 let g:coc_user_config = {
@@ -417,29 +413,36 @@ let g:coc_user_config = {
   \     }
   \ },
   \ "eslint.autoFixOnSave": v:true,
-  \ 'diagnostic': {
-  \   'errorSign': '✘',
-  \   'warningSign': '⚠',
-  \   'infoSign': '',
-  \   'hintSign': 'ஐ',
+  \ "diagnostic": {
+  \   "errorSign": "✘",
+  \   "warningSign": "⚠",
+  \   "infoSign": "'",
+  \   "hintSign": "ஐ",
   \ },
-  \ 'diagnostic-languageserver.filetypes': {
-  \   'vim': 'vint',
-  \   'sh': 'shellcheck',
-  \   'html': ['tidy'],
-  \   'javascript': ['eslint'],
-  \   'typescript': ['tslint']
+  \ "coc.preferences.formatOnType": v:true,
+  \ "python.linting.pylintEnabled": v:true,
+  \ "python.formatting": {
+  \    "provider": "black",
+  \    "blackPath": "~/.vim/black/bin/black",
+  \    "blackArgs": ["--diff", "--quiet", "--fast"]
+  \ },
+  \ "diagnostic-languageserver.filetypes": {
+  \   "vim": "vint",
+  \   "sh": "shellcheck",
+  \   "html": ["tidy"],
+  \   "javascript": ["eslint"],
+  \   "typescript": ["tslint"]
   \  },
-  \ 'coc.preferences.formatOnSaveFiletypes': [
-  \   'javascript',
-  \   'python',
-  \   'json',
-  \   'graphql',
+  \ "coc.preferences.formatOnSaveFiletypes": [
+  \   "javascript",
+  \   "python",
+  \   "json",
+  \   "graphql",
   \ ],
-  \ 'prettier.disableSuccessMessage': v:true,
-  \ 'css.lint':  {
-  \   'duplicateProperties': 'warning',
-  \   'float': 'warning',
+  \ "prettier.disableSuccessMessage": v:true,
+  \ "css.lint":  {
+  \   "duplicateProperties": "warning",
+  \   "float": "warning",
   \ }
   \ }
 
