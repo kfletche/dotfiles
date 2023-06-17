@@ -1,4 +1,4 @@
-" ======= Initial Setup ======= "
+" ====== Initial Setup ======= "
 
 "---------------------
 " Plugin installation
@@ -9,6 +9,10 @@ call plug#begin('~/.vim/plugged')
 
 " Code Completion & references
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'github/copilot.vim'
+
+" Neovim
+Plug 'nvim-tree/nvim-tree.lua'
 
 " Linting
 "Plug 'dense-analysis/ale'             " faster linting than coc
@@ -26,13 +30,13 @@ Plug 'honza/vim-snippets'             " snippets library
 
 Plug 'tmhedberg/SimpylFold'                           " proper folding for python
 "Plug 'vim-scripts/indentpython.vim'                  " fixes indentation
-Plug 'jpalardy/vim-slime', { 'for': 'python' }        " ipython integration
-Plug 'hanschen/vim-ipython-cell', { 'for': 'python' } " ipython integration
+" Plug 'jpalardy/vim-slime', { 'for': 'python' }        " ipython integration
+" Plug 'hanschen/vim-ipython-cell', { 'for': 'python' } " ipython integration
 
 
 " Search / Navigation
-Plug 'scrooloose/nerdtree'
-Plug 'jistr/vim-nerdtree-tabs'
+" Plug 'scrooloose/nerdtree'
+" Plug 'jistr/vim-nerdtree-tabs'
 "Plug 'ctrlpvim/ctrlp.vim'                                         " search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " search
 Plug 'easymotion/vim-easymotion'
@@ -98,11 +102,13 @@ set autochdir " automatically set current directory to directory of last opened 
 set history=8192 " more history
 set nojoinspaces " suppress inserting two spaces between sentences
 set mouse+=a " enable mouse mode (scrolling, selection, etc)
-set nofoldenable " disable folding by default
+set nofoldenable " disable folding
+set foldmethod=syntax " fold based on syntax
+set foldlevel=1
 set noerrorbells visualbell t_vb= " disable audible bell
 set splitbelow " open new split panes below
 set splitright " open split panes to the right
-set clipboard=unnamed " clipboard in os x
+set clipboard=unnamed " share clipboard with system
 set nopaste " turn off autoindent when pasting
 
 set ruler " text after double quote a comment
@@ -400,6 +406,7 @@ let g:coc_global_extensions = [
   \ "coc-json",
   \ "coc-css",
   \ "coc-html",
+  \ "coc-prettier",
   \ ]
 
 let g:coc_user_config = {
@@ -427,7 +434,6 @@ let g:coc_user_config = {
   \ "python.linting.pylintEnabled": v:true,
   \ "python.formatting": {
   \    "provider": "black",
-  \    "blackPath": "~/.vim/black/bin/black",
   \    "blackArgs": ["--diff", "--quiet", "--fast"]
   \ },
   \ "diagnostic-languageserver.filetypes": {
@@ -450,8 +456,8 @@ let g:coc_user_config = {
   \ }
   \ }
 
-nmap <leader>d  <Plug>(coc-codeaction)
-"nmap <leader>d :CocCommand eslint.executeAutofix<cr>
+"nmap <leader>d  <Plug>(coc-codeaction)
+nmap <leader>d :CocCommand eslint.executeAutofix<cr>
 nmap gn <Plug>(coc-diagnostic-next)
 nmap gp <Plug>(coc-diagnostic-prev)
 
@@ -477,6 +483,8 @@ endfunction
 
 let g:coc_snippet_next = '<tab>'
 
+" prettier manual shortcut
+command! -nargs=0 Prettier :CocCommand prettier.forceFormatDocument
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -563,68 +571,68 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 
-" slime configuration (for ipython integration)
+" " slime configuration (for ipython integration)
 
-" always use tmux
-let g:slime_target = 'tmux'
+" " always use tmux
+" let g:slime_target = 'tmux'
 
-" fix paste issues in ipython
-let g:slime_python_ipython = 1
+" " fix paste issues in ipython
+" let g:slime_python_ipython = 1
 
-" always send text to the top-right pane in the current tmux tab without asking
-let g:slime_default_config = {
-            \ 'socket_name': get(split($TMUX, ','), 0),
-            \ 'target_pane': '{top-right}' }
-let g:slime_dont_ask_default = 1
+" " always send text to the top-right pane in the current tmux tab without asking
+" let g:slime_default_config = {
+"             \ 'socket_name': get(split($TMUX, ','), 0),
+"             \ 'target_pane': '{top-right}' }
+" let g:slime_dont_ask_default = 1
 
-" ipython-cell configuration
+" " ipython-cell configuration
 
-" map <Leader>s to start IPython
-nnoremap <Leader>s :SlimeSend1 ipython --matplotlib<CR>
+" " map <Leader>s to start IPython
+" nnoremap <Leader>s :SlimeSend1 ipython --matplotlib<CR>
 
-" map <Leader>r to run script
-nnoremap <Leader>r :IPythonCellRun<CR>
+" " map <Leader>r to run script
+" nnoremap <Leader>r :IPythonCellRun<CR>
 
-" map <Leader>R to run script and time the execution
-nnoremap <Leader>R :IPythonCellRunTime<CR>
+" " map <Leader>R to run script and time the execution
+" nnoremap <Leader>R :IPythonCellRunTime<CR>
 
-" map <Leader>c to execute the current cell
-nnoremap <Leader>c :IPythonCellExecuteCell<CR>
+" " map <Leader>c to execute the current cell
+" nnoremap <Leader>c :IPythonCellExecuteCell<CR>
 
-" map <Leader>C to execute the current cell and jump to the next cell
-nnoremap <Leader>C :IPythonCellExecuteCellJump<CR>
+" " map <Leader>C to execute the current cell and jump to the next cell
+" nnoremap <Leader>C :IPythonCellExecuteCellJump<CR>
 
-" map <Leader>l to clear IPython screen
-nnoremap <Leader>l :IPythonCellClear<CR>
+" " map <Leader>l to clear IPython screen
+" nnoremap <Leader>l :IPythonCellClear<CR>
 
-" map <Leader>x to close all Matplotlib figure windows
-nnoremap <Leader>x :IPythonCellClose<CR>
+" " map <Leader>x to close all Matplotlib figure windows
+" nnoremap <Leader>x :IPythonCellClose<CR>
 
-" map [c and ]c to jump to the previous and next cell header
-nnoremap [c :IPythonCellPrevCell<CR>
-nnoremap ]c :IPythonCellNextCell<CR>
+" " map [c and ]c to jump to the previous and next cell header
+" nnoremap [c :IPythonCellPrevCell<CR>
+" nnoremap ]c :IPythonCellNextCell<CR>
 
-" map <Leader>h to send the current line or current selection to IPython
-nmap <Leader>h <Plug>SlimeLineSend
-xmap <Leader>h <Plug>SlimeRegionSend
+" " map <Leader>h to send the current line or current selection to IPython
+" nmap <Leader>h <Plug>SlimeLineSend
+" xmap <Leader>h <Plug>SlimeRegionSend
 
-" map <Leader>p to run the previous command
-nnoremap <Leader>p :IPythonCellPrevCommand<CR>
+" " map <Leader>p to run the previous command
+" nnoremap <Leader>p :IPythonCellPrevCommand<CR>
 
-" map <Leader>Q to restart ipython
-nnoremap <Leader>Q :IPythonCellRestart<CR>
+" " map <Leader>Q to restart ipython
+" nnoremap <Leader>Q :IPythonCellRestart<CR>
 
-" map <Leader>d to start debug mode
-nnoremap <Leader>d :SlimeSend1 %debug<CR>
+" " map <Leader>d to start debug mode
+" " nnoremap <Leader>d :SlimeSend1 %debug<CR>
 
-" map <Leader>q to exit debug mode or IPython
-nnoremap <Leader>q :SlimeSend1 exit<CR>
+" " map <Leader>q to exit debug mode or IPython
+" nnoremap <Leader>q :SlimeSend1 exit<CR>
 
-" map <F9> and <F10> to insert a cell header tag above/below and enter insert mode
-nmap <F9> :IPythonCellInsertAbove<CR>a
-nmap <F10> :IPythonCellInsertBelow<CR>a
+" " map <F9> and <F10> to insert a cell header tag above/below and enter insert mode
+" nmap <F9> :IPythonCellInsertAbove<CR>a
+" nmap <F10> :IPythonCellInsertBelow<CR>a
 
-" also make <F9> and <F10> work in insert mode
-imap <F9> <C-o>:IPythonCellInsertAbove<CR>
-imap <F10> <C-o>:IPythonCellInsertBelow<CR>
+" " also make <F9> and <F10> work in insert mode
+" imap <F9> <C-o>:IPythonCellInsertAbove<CR>
+" imap <F10> <C-o>:IPythonCellInsertBelow<CR>
 
